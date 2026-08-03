@@ -1,8 +1,8 @@
-// Search Party Firebase configuration
+// Men's Trip Trivia Firebase configuration
 // This client-side configuration is intended to be published with the web app.
 // Security is enforced by Firebase Authentication and Firestore Security Rules.
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyCinGDDS6hlR6wjRJ1jZpvm8Y3s2PCMOMs",
   authDomain: "mens-trip-trivia.firebaseapp.com",
   projectId: "mens-trip-trivia",
