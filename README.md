@@ -1,6 +1,6 @@
-# Men’s Trip Trivia — Phase 1B
+# Men’s Trip Trivia — v1.0.0
 
-A simple phone-first multiplayer trivia proof of concept for the San Francisco Men’s Trip 2026. It runs directly on GitHub Pages and reuses the proven Firebase room, player, answer, and scoreboard flow from Search Party.
+A simple phone-first multiplayer trivia game for the San Francisco Men’s Trip 2026. It runs directly on GitHub Pages and uses Firebase for rooms, players, answers, scoring, and the live scoreboard.
 
 ## Complete release files
 
@@ -13,20 +13,21 @@ A simple phone-first multiplayer trivia proof of concept for the San Francisco M
 - `firestore.rules`
 - `README.md`
 
-The existing Firebase web configuration remains included in `firebase-config.js`.
+## v1.0.0 scope
 
-## Phase 1B scope
-
-- Renamed as Men’s Trip Trivia
-- Five temporary multiple-choice questions
-- Five-round games only
+- Nine validated questions imported from the Men’s Trip Trivia workbook
+- Nine-round games
 - Existing create-room and join-room flow
 - Host-controlled start, reveal, and next-round flow
 - One point for each correct answer
 - Final scoreboard
 - Reveal button immediately disables after use to reduce duplicate-scoring risk
 
-No categories, timers, free-text answers, host transfer, architecture changes, or main-app integration are included.
+No categories, timers, free-text answers, host transfer, visual answer animations, architecture changes, or main-app integration are included.
+
+## Question-bank note
+
+The uploaded workbook contained ten filled question rows. Question ID 5, about the Philadelphia restaurant that left some of the group hungry, had no value in **Correct (A-D)**. It was excluded from this release rather than assigning an unverified answer. Add the correct letter to a future workbook upload and it can be included in the next release.
 
 ## Deploy
 
@@ -52,26 +53,22 @@ In GitHub:
 
 **Settings → Pages → Deploy from a branch → main → /(root) → Save**
 
-After deployment, hard-refresh with **Ctrl+Shift+R** or use an incognito window.
+After deployment, use a Private Browsing window on mobile Safari if the normal tab is still serving cached JavaScript.
 
-## Phase 1B test
+## v1.0.0 test
 
-1. On Phone 1, create a five-round room.
+1. On Phone 1, create a nine-round room.
 2. On Phone 2, join using the room code.
 3. Confirm both players appear.
 4. Start the game.
 5. Submit answers from both phones.
 6. Reveal the correct answer.
 7. Confirm each correct player receives exactly one point.
-8. Advance through all five questions.
+8. Advance through all nine questions.
 9. Confirm the final rankings are correct.
 
-For this proof of concept, create a new room for each game rather than using **Play Again**.
-
-## Question data
-
-The five included questions are temporary test content. The downloadable question-bank workbook will become the source for later question updates.
+For now, create a new room for each game rather than using **Play Again**.
 
 ## Suggested commit comment
 
-> Convert Search Party into Men’s Trip Trivia Phase 1B proof of concept
+> Release Men’s Trip Trivia v1.0.0 with first validated question set
