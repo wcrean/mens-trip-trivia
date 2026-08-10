@@ -16,7 +16,7 @@ A simple phone-first multiplayer trivia game for the San Francisco Men’s Trip 
 ## v1.0.0 scope
 
 - Nine validated questions imported from the Men’s Trip Trivia workbook
-- Nine-round games
+- Five rounds by default, with a nine-round option
 - Existing create-room and join-room flow
 - Host-controlled start, reveal, and next-round flow
 - One point for each correct answer
@@ -57,7 +57,7 @@ After deployment, use a Private Browsing window on mobile Safari if the normal t
 
 ## v1.0.0 test
 
-1. On Phone 1, create a nine-round room.
+1. On Phone 1, create a five-round room.
 2. On Phone 2, join using the room code.
 3. Confirm both players appear.
 4. Start the game.
@@ -72,3 +72,11 @@ For now, create a new room for each game rather than using **Play Again**.
 ## Suggested commit comment
 
 > Release Men’s Trip Trivia v1.0.0 with first validated question set
+
+
+## v1.0.1
+
+- Makes five rounds the default.
+- Keeps nine rounds available.
+- Fixes answer-listener lifecycle so host answer counts update reliably.
+- Changes the submitted-answer copy to “You can still change it.”

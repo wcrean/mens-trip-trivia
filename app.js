@@ -25,7 +25,8 @@ const state = {
   answers: [],
   isHost: false,
   selectedChoice: null,
-  unsubscribers: []
+  unsubscribers: [],
+  answerUnsubscriber: null
 };
 
 const screens = {
@@ -89,6 +90,8 @@ function saveRoom(code) {
 }
 
 function leaveRoom() {
+  state.answerUnsubscriber?.();
+  state.answerUnsubscriber = null;
   state.unsubscribers.forEach(unsubscribe => unsubscribe?.());
   state.unsubscribers = [];
   state.roomCode = "";
@@ -102,6 +105,8 @@ function leaveRoom() {
 }
 
 function subscribe(code) {
+  state.answerUnsubscriber?.();
+  state.answerUnsubscriber = null;
   state.unsubscribers.forEach(unsubscribe => unsubscribe?.());
   state.unsubscribers = [];
 
@@ -166,10 +171,8 @@ function renderLobby() {
 }
 
 function resetAnswerSubscription() {
-  const answerUnsub = state.unsubscribers.pop();
-  if (state.unsubscribers.length > 1) answerUnsub?.();
-
-  const unsubscribe = subscribeToAnswers(
+  state.answerUnsubscriber?.();
+  state.answerUnsubscriber = subscribeToAnswers(
     state.roomCode,
     state.room.roundIndex,
     answers => {
@@ -179,7 +182,6 @@ function resetAnswerSubscription() {
     },
     error => setError(friendlyError(error), error?.message)
   );
-  state.unsubscribers.push(unsubscribe);
 }
 
 function renderQuestion() {
