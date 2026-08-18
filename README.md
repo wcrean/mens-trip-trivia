@@ -1,4 +1,4 @@
-Men’s Trip Trivia v1.3.0
+Men’s Trip Trivia v1.3.1
 
 # Men’s Trip Trivia — v1.0.0
 

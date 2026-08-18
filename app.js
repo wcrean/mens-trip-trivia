@@ -232,8 +232,8 @@ function renderReveal() {
   if (!question) return;
 
   renderReactionImage(question);
+  $("#reveal-question").textContent = question.stem;
   $("#reveal-answer").textContent = question.choices[question.correctIndex];
-  $("#reveal-note").textContent = question.note;
   $("#host-reveal-controls").classList.toggle("hidden", !state.isHost);
   renderRevealVotes();
   renderRightWrong(question);
