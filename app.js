@@ -10,6 +10,7 @@ import {
   startGame,
   submitAnswer,
   revealRound,
+  showStandings,
   nextRound,
   resetGame,
   endGame,
@@ -50,6 +51,7 @@ const screens = {
   lobby: $("#screen-lobby"),
   question: $("#screen-question"),
   reveal: $("#screen-reveal"),
+  standings: $("#screen-standings"),
   finished: $("#screen-finished"),
   error: $("#screen-error")
 };
@@ -158,6 +160,9 @@ function routeRoom() {
   } else if (status === "reveal") {
     renderReveal();
     showScreen("reveal");
+  } else if (status === "standings") {
+    renderStandings();
+    showScreen("standings");
   } else if (status === "finished") {
     renderFinished();
     showScreen("finished");
@@ -207,7 +212,7 @@ function renderQuestion() {
 
   state.selectedChoice = null;
   $("#round-progress").textContent =
-    `Round ${state.room.roundIndex + 1} of ${state.room.roundCount}`;
+    `Question ${state.room.roundIndex + 1} of ${state.room.roundCount}`;
   $("#question-stem").textContent = question.stem;
   $("#choice-list").innerHTML = question.choices.map((choice, index) => `
     <button class="choice-button" data-choice="${index}">
@@ -230,10 +235,45 @@ function renderReveal() {
   $("#reveal-answer").textContent = question.choices[question.correctIndex];
   $("#reveal-note").textContent = question.note;
   $("#host-reveal-controls").classList.toggle("hidden", !state.isHost);
-  $("#next-round-button").textContent =
-    state.room.roundIndex + 1 >= state.room.roundCount ? "Show Final Results" : "Next Round";
   renderRevealVotes();
+  renderRightWrong(question);
+}
+
+
+function renderRightWrong(question) {
+  const answerByPlayer = new Map(state.answers.map(answer => [answer.id, answer]));
+  const right = [];
+  const wrong = [];
+
+  state.players.forEach(player => {
+    const answer = answerByPlayer.get(player.id);
+    if (!answer) {
+      wrong.push(`${player.name} (no answer)`);
+    } else if (answer.choiceIndex === question.correctIndex) {
+      right.push(player.name);
+    } else {
+      wrong.push(player.name);
+    }
+  });
+
+  $("#right-player-list").innerHTML = right.length
+    ? right.map(name => `<span class="name-chip right-chip">${escapeHtml(name)}</span>`).join("")
+    : '<span class="muted">Nobody</span>';
+  $("#wrong-player-list").innerHTML = wrong.length
+    ? wrong.map(name => `<span class="name-chip wrong-chip">${escapeHtml(name)}</span>`).join("")
+    : '<span class="muted">Nobody</span>';
+}
+
+function renderStandings() {
   renderScoreboard();
+  const questionNumber = state.room.roundIndex + 1;
+  $("#standings-progress").textContent = `After Question ${questionNumber} of ${state.room.roundCount}`;
+  $("#host-standings-controls").classList.toggle("hidden", !state.isHost);
+  $("#standings-waiting").textContent = state.isHost
+    ? "Advance when everyone is ready."
+    : "Waiting for the host to continue.";
+  $("#next-round-button").textContent =
+    questionNumber >= state.room.roundCount ? "Show Final Results" : "Next Question";
 }
 
 function renderReactionImage(question) {
@@ -431,6 +471,10 @@ $("#reveal-button").addEventListener("click", async event => {
   }
 });
 
+$("#show-standings-button").addEventListener("click", () =>
+  showStandings(state.roomCode).catch(error => setError(friendlyError(error), error?.message))
+);
+
 $("#next-round-button").addEventListener("click", () =>
   nextRound(state.roomCode, state.room.roundIndex, state.room.roundCount)
     .catch(error => setError(friendlyError(error), error?.message))
@@ -462,6 +506,7 @@ async function endRoom() {
 }
 $("#end-game-question-button").addEventListener("click", finishGameEarly);
 $("#end-game-reveal-button").addEventListener("click", finishGameEarly);
+$("#end-game-standings-button").addEventListener("click", finishGameEarly);
 $("#delete-room-button").addEventListener("click", endRoom);
 $("#finish-room-button").addEventListener("click", endRoom);
 

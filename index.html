@@ -124,14 +124,31 @@
       </div>
 
       <div class="panel">
-        <h2>Scoreboard</h2>
-        <div id="scoreboard"></div>
+        <h2>Who got it right?</h2>
+        <div id="right-player-list" class="name-list"></div>
+        <h2 class="missed-heading">Who missed it?</h2>
+        <div id="wrong-player-list" class="name-list"></div>
       </div>
 
       <div id="host-reveal-controls" class="button-stack hidden">
-        <button id="next-round-button" class="primary-button">Next Round</button>
+        <button id="show-standings-button" class="primary-button">Show Standings</button>
         <button id="end-game-reveal-button" class="danger-button">End Game</button>
       </div>
+    </section>
+
+    <section id="screen-standings" class="screen">
+      <div class="hero-card">
+        <p class="eyebrow">STANDINGS</p>
+        <h2 id="standings-progress">After Question 1 of 5</h2>
+      </div>
+      <div class="panel">
+        <div id="scoreboard"></div>
+      </div>
+      <div id="host-standings-controls" class="button-stack hidden">
+        <button id="next-round-button" class="primary-button">Next Question</button>
+        <button id="end-game-standings-button" class="danger-button">End Game</button>
+      </div>
+      <p id="standings-waiting" class="status-text"></p>
     </section>
 
     <section id="screen-finished" class="screen">

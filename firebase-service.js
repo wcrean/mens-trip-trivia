@@ -159,6 +159,14 @@ export async function revealRound(code, roundIndex, correctIndex) {
   await batch.commit();
 }
 
+
+export async function showStandings(code) {
+  await updateDoc(doc(db, "rooms", code), {
+    status: "standings",
+    updatedAt: serverTimestamp()
+  });
+}
+
 export async function nextRound(code, currentIndex, roundCount) {
   const nextIndex = currentIndex + 1;
   await updateDoc(doc(db, "rooms", code), {

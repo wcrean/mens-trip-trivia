@@ -1,4 +1,4 @@
-Men’s Trip Trivia v1.2.0
+Men’s Trip Trivia v1.3.0
 
 # Men’s Trip Trivia — v1.0.0
 
@@ -89,3 +89,11 @@ For now, create a new room for each game rather than using **Play Again**.
 - Room codes are now five letters only.
 - Hosts can end an active game early and immediately show final scores.
 - Games remain fixed at five questions.
+
+
+## v1.3.0
+- Shows “Question X of 5” during every question.
+- Reveal screen now identifies who got the question right and who missed it.
+- Removes the scoreboard from the reveal screen.
+- Adds a host-triggered Standings step between reveal and the next question.
+- Hosts can still end the game from the question, reveal, or standings step.
