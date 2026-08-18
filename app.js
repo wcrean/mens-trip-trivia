@@ -18,6 +18,19 @@ import {
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 
+const GAME_LENGTH = 5;
+
+const REACTION_IMAGES = {
+  correct: [
+    "correct-avi.webp", "correct-baker.webp", "correct-bill.webp", "correct-gus.webp",
+    "correct-james.webp", "correct-jason.webp", "correct-roland.webp", "correct-tato.webp"
+  ],
+  incorrect: [
+    "incorrect-avi.webp", "incorrect-baker.webp", "incorrect-bill.webp", "incorrect-gus.webp",
+    "incorrect-james.webp", "incorrect-jason.webp", "incorrect-roland.webp", "incorrect-tato.webp"
+  ]
+};
+
 const state = {
   roomCode: localStorage.getItem("mensTripTriviaRoom") || "",
   room: null,
@@ -212,6 +225,7 @@ function renderReveal() {
   const question = currentQuestion();
   if (!question) return;
 
+  renderReactionImage(question);
   $("#reveal-answer").textContent = question.choices[question.correctIndex];
   $("#reveal-note").textContent = question.note;
   $("#host-reveal-controls").classList.toggle("hidden", !state.isHost);
@@ -219,6 +233,29 @@ function renderReveal() {
     state.room.roundIndex + 1 >= state.room.roundCount ? "Show Final Results" : "Next Round";
   renderRevealVotes();
   renderScoreboard();
+}
+
+function renderReactionImage(question) {
+  const card = $("#reaction-card");
+  const image = $("#reaction-image");
+  const userId = getCurrentUser().uid;
+  const myAnswer = state.answers.find(answer => answer.id === userId);
+
+  if (!myAnswer) {
+    card.classList.add("hidden");
+    image.removeAttribute("src");
+    return;
+  }
+
+  const result = myAnswer.choiceIndex === question.correctIndex ? "correct" : "incorrect";
+  const choices = REACTION_IMAGES[result];
+  const seed = [...`${state.roomCode}-${state.room.roundIndex}-${userId}`]
+    .reduce((total, character) => total + character.charCodeAt(0), 0);
+  const filename = choices[seed % choices.length];
+
+  image.src = `./images/reactions/${filename}`;
+  image.alt = result === "correct" ? "Correct answer reaction" : "Incorrect answer reaction";
+  card.classList.remove("hidden");
 }
 
 function renderRevealVotes() {
@@ -289,7 +326,7 @@ $("#leave-game-button").addEventListener("click", leaveRoom);
 $("#create-form").addEventListener("submit", async event => {
   event.preventDefault();
   const hostName = $("#host-name").value.trim();
-  const roundCount = Number($("#round-count").value);
+  const roundCount = GAME_LENGTH;
   const button = event.submitter;
   button.disabled = true;
 

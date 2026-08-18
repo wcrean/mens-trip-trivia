@@ -57,11 +57,7 @@
         <h2>Create a game</h2>
         <label for="host-name">Nickname</label>
         <input id="host-name" maxlength="20" autocomplete="nickname" required placeholder="Bill">
-        <label for="round-count">Rounds</label>
-        <select id="round-count">
-          <option value="5" selected>5 rounds</option>
-          <option value="9">9 rounds</option>
-        </select>
+        <p class="fixed-game-note"><strong>5 questions</strong> per game</p>
         <button class="primary-button" type="submit">Create Room</button>
         <button id="back-home-button" class="text-button" type="button">Back</button>
       </form>
@@ -112,6 +108,9 @@
     </section>
 
     <section id="screen-reveal" class="screen">
+      <div id="reaction-card" class="reaction-card hidden">
+        <img id="reaction-image" alt="Men’s Trip answer reaction">
+      </div>
       <div class="answer-card">
         <p class="eyebrow">CORRECT ANSWER</p>
         <h2 id="reveal-answer"></h2>
