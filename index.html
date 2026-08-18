@@ -46,7 +46,7 @@
         <label for="join-name">Nickname</label>
         <input id="join-name" maxlength="20" autocomplete="nickname" required placeholder="Bill">
         <label for="join-code">Room code</label>
-        <input id="join-code" maxlength="5" autocapitalize="characters" required placeholder="JANE7">
+        <input id="join-code" maxlength="5" minlength="5" autocapitalize="characters" autocomplete="off" spellcheck="false" pattern="[A-Za-z]{5}" title="Enter the 5-letter room code" required placeholder="JAMES">
         <button class="primary-button" type="submit">Join</button>
         <p id="home-error" class="error-text"></p>
       </form>
@@ -104,6 +104,7 @@
 
       <div id="host-question-controls" class="button-stack hidden">
         <button id="reveal-button" class="primary-button">Reveal Answer</button>
+        <button id="end-game-question-button" class="danger-button">End Game</button>
       </div>
     </section>
 
@@ -129,6 +130,7 @@
 
       <div id="host-reveal-controls" class="button-stack hidden">
         <button id="next-round-button" class="primary-button">Next Round</button>
+        <button id="end-game-reveal-button" class="danger-button">End Game</button>
       </div>
     </section>
 

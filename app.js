@@ -12,6 +12,7 @@ import {
   revealRound,
   nextRound,
   resetGame,
+  endGame,
   deleteRoom
 } from "./firebase-service.js";
 
@@ -80,7 +81,7 @@ function friendlyError(error) {
 }
 
 function randomCode() {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ";
   return Array.from({ length: 5 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
 }
 
@@ -359,6 +360,14 @@ $("#create-form").addEventListener("submit", async event => {
   }
 });
 
+
+$("#join-code").addEventListener("input", event => {
+  event.currentTarget.value = event.currentTarget.value
+    .toUpperCase()
+    .replace(/[^A-Z]/g, "")
+    .slice(0, 5);
+});
+
 $("#join-form").addEventListener("submit", async event => {
   event.preventDefault();
   const playerName = $("#join-name").value.trim();
@@ -431,6 +440,18 @@ $("#play-again-button").addEventListener("click", () =>
   resetGame(state.roomCode).catch(error => setError(friendlyError(error), error?.message))
 );
 
+async function finishGameEarly() {
+  if (!state.isHost) return;
+  const confirmed = window.confirm("End the game now and show the current final scores?");
+  if (!confirmed) return;
+
+  try {
+    await endGame(state.roomCode);
+  } catch (error) {
+    setError(friendlyError(error), error?.message);
+  }
+}
+
 async function endRoom() {
   try {
     await deleteRoom(state.roomCode);
@@ -439,6 +460,8 @@ async function endRoom() {
     setError(friendlyError(error), error?.message);
   }
 }
+$("#end-game-question-button").addEventListener("click", finishGameEarly);
+$("#end-game-reveal-button").addEventListener("click", finishGameEarly);
 $("#delete-room-button").addEventListener("click", endRoom);
 $("#finish-room-button").addEventListener("click", endRoom);
 

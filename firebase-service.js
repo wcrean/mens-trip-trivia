@@ -168,6 +168,13 @@ export async function nextRound(code, currentIndex, roundCount) {
   });
 }
 
+export async function endGame(code) {
+  await updateDoc(doc(db, "rooms", code), {
+    status: "finished",
+    updatedAt: serverTimestamp()
+  });
+}
+
 export async function resetGame(code) {
   const roomRef = doc(db, "rooms", code);
   const roomSnap = await getDoc(roomRef);

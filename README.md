@@ -1,3 +1,5 @@
+Men’s Trip Trivia v1.2.0
+
 # Men’s Trip Trivia — v1.0.0
 
 A simple phone-first multiplayer trivia game for the San Francisco Men’s Trip 2026. It runs directly on GitHub Pages and uses Firebase for rooms, players, answers, scoring, and the live scoreboard.
@@ -80,3 +82,10 @@ For now, create a new room for each game rather than using **Play Again**.
 - Keeps nine rounds available.
 - Fixes answer-listener lifecycle so host answer counts update reliably.
 - Changes the submitted-answer copy to “You can still change it.”
+
+
+## v1.2.0
+- Replaced Jason's incorrect reaction image with the finished overlay version.
+- Room codes are now five letters only.
+- Hosts can end an active game early and immediately show final scores.
+- Games remain fixed at five questions.
