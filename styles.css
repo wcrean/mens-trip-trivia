@@ -237,3 +237,16 @@ input, select {
 .reveal-answer-label {
   margin-top: 1.25rem;
 }
+
+.room-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.room-tools .small-button,
+.room-tools .text-button {
+  width: auto;
+  margin: 0;
+}
